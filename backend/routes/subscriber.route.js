@@ -1,24 +1,22 @@
 const express = require('express');
-const { auth } = require('./../middleware/AuthMiddleware');
-const Product  = require('../models/product.model');
-
+const Subscriber = require('../models/subscriber.model')
 const router = express.Router();
 
-// POST http://localhost:5000/product/
-router.post('/',auth,  async(req,res) =>{
-    // auth,
-    const { name, priceInCents,description, image, category } = req.body;
+
+
+router.post('/', async(req,res) =>{
+    const { email } = req.body;
     console.log(req?.body);
-    if(!name || !priceInCents || !image || !category) {
-        return res.status(400).json('Required fields are missing')
+    if(!email) {
+        return res.status(400).json('EmailId is missing')
     }
 try {
     
-    const newProduct = new Product({ name, priceInCents,description, image, category });
+    const newSubscriber = new Subscriber({ email });
     // const product = await Product.create(req?.body);
-    console.log(newProduct);
-    await newProduct.save();
-    return res.status(201).json({ message: 'Product created successfully', newProduct })
+    console.log(newSubscriber);
+    await newSubscriber.save();
+    return res.status(201).json({ message: 'User subscribed successfully', newSubscriber })
 
 } catch (error) {
     res.status(500).json({message: error.message})
@@ -50,8 +48,7 @@ router.get('/:id', async(req,res) => {
 })
 
 // delete product 
-router.delete('/:id',auth, async(req,res) => {
-    // auth,
+router.delete('/:id', async(req,res) => {
     try{
         const { id } = req?.params;
         const product = await Product.findByIdAndDelete(id);
@@ -64,8 +61,7 @@ router.delete('/:id',auth, async(req,res) => {
 })
 
 // update product
-router.put('/:id',auth, async(req,res) =>{
-    // auth,
+router.put('/:id', async(req,res) =>{
     try {
         const {id} = req?.params;
         const product =  await Product.findByIdAndUpdate(id, req?.body, {new: true});
@@ -78,9 +74,5 @@ router.put('/:id',auth, async(req,res) =>{
         res.status(500).json({message: err.message})
     }
 })
-
- // POST http://localhost:5000/product/createProduct
-// router.post('/createProduct', async(req,res) =>{
-// });
 
 module.exports = router;

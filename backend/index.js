@@ -8,7 +8,10 @@ const multer = require('multer');
 // cloudinary storage engine for multer to handle file uploads
 const  { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-const  productRoute = require('./routes/product.route');
+const productRoute = require('./routes/product.route');
+const stripeRoute = require('./routes/stripe.route');
+const subscriberRoute = require('./routes/subscriber.route');
+const  authRoute = require('./controllers/auth.controller')
 
 require('dotenv').config();
 
@@ -18,7 +21,7 @@ const app = express();
 app.use(cors(
     {
         origin: "http://localhost:5173",
-        credentials: true
+        credentials: true,
     }
 ));
 app.use(express.json());    // parse application/json
@@ -129,6 +132,10 @@ app.put("/upload-image/:id", parser.single("file"), async (req, res) => {
 
 
 
+// use Stripe route 
+app.use('/stripe', stripeRoute);
+app.use('/subscribe', subscriberRoute);
+app.use('/auth', authRoute);
 // connect to mongodb
 mongoose.connect(process.env.MONGO_URL)
 .then(() =>{ 

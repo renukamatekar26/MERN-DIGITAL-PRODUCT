@@ -19,6 +19,15 @@ const CreateProduct = () => {
 
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
+    // authorize user to edit product
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
 
     // file handler
     const handleFileChange = (e) => {
@@ -84,7 +93,7 @@ const CreateProduct = () => {
                 image: uploadedImageUrl
             }
             debugger;
-            await axios.post(`${import.meta.env.VITE_REACT_APP_BASEURL}/product`, formData);
+            await axios.post(`${import.meta.env.VITE_REACT_APP_BASEURL}/product`, formData, config);
             enqueueSnackbar('Product saved successfully', {variant: 'success'})
             navigate('/admin');
         } catch (error) {
@@ -99,60 +108,61 @@ const CreateProduct = () => {
     };
 
   return (
-    <div className='p-6 bg-gray-50 flex justify-center items-center'>
+    <div className='p-6 bg-base-100 flex justify-center items-center'>
             
-                <div className='container max-w-lg shadow-lg rounded-lg p-5 bg-white'>
+                <div className='container max-w-lg shadow-lg rounded-lg p-5 bg-base-200'>
                     <Link to='/admin'
-                     className='flex justify-center items-center bg-gray-900  mb-4 w-24 py-[10px] px-4 text-white text-sm rounded-xl'>
+
+                     className=' flex justify-center items-center mb-4 w-24 py-[10px] px-4 text-sm rounded-xl btn btn-accent'>
                      Back</Link>
-                     <h1 className='text-3xl font-semibold my-4 text-gray-800'>Create Product</h1>
+                     <h1 className='text-3xl font-semibold my-4 '>Create Product</h1>
                      <div className='my-4'>
                      {/* name */}
-                     <label htmlFor='name' className='block text-md text-gray-600 mb-2'>Name</label>
+                     <label htmlFor='name' className='block text-md  mb-2'>Name</label>
                      <input 
                         id='name'
                         type='text'
                         value = {name}
                         onChange={(e) => setName(e.target.value)}
-                        className='border border-gray-300 focus:text-black px-4 py-2 w-full rounded-md bg-[#fdfdfd]'
+                        className='border border-base-300 focus:text-black px-4 py-2 w-full rounded-md '
                      />
                      {/* price in cents */}
-                    <label htmlFor='priceInCents' className='block text-md text-gray-600 mb-2'>
+                    <label htmlFor='priceInCents' className='block text-md  mb-2'>
                     Price in Cents</label>
                      <input 
                         id='priceInCents'
                         type='text'
                         value = {priceInCents}
                         onChange={(e) => setPriceInCents(e.target.value)}
-                        className='border border-gray-300 focus:text-black px-4 py-2 w-full rounded-md bg-[#fdfdfd]'
+                        className='border border-base-300 focus:text-black px-4 py-2 w-full rounded-md '
                      />
     
                      {/* description */}
-                    <label htmlFor='description' className='block text-md text-gray-600 mb-2'>
+                    <label htmlFor='description' className='block text-md  mb-2'>
                     Description</label>
                      <input 
                         id='description'
                         type='text'
                         value = {description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className='border border-gray-300 focus:text-black px-4 py-2 w-full rounded-md bg-[#fdfdfd]'
+                        className='border border-base-300 focus:text-black px-4 py-2 w-full rounded-md '
                      />
     
                      {/* category */}
-                    <label htmlFor='category' className='block text-md text-gray-600 mb-2'>
+                    <label htmlFor='category' className='block text-md  mb-2'>
                     Category</label>
                     <select
                     id='category'
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className='w-full border border-gray-300 focus:text-black px-4 py-2 rounded-md bg-[#fdfdfd]'
+                    className='w-full border border-base-300 focus:text-black px-4 py-2 rounded-md '
                     required>
                         <option value="" disabled>Select Category</option>
                         <option value="course">Course</option>
                         <option value="template">Template</option>
                     </select>
 
-                    <label htmlFor='img' className='block text-md text-gray-600 mb-2'>
+                    <label htmlFor='img' className='block text-md  mb-2'>
                     Upload Image</label>
                      <input 
                         id='img'
@@ -160,7 +170,7 @@ const CreateProduct = () => {
                         accept='image/*'
                         onChange={handleFileChange}
                         required
-                        className='border border-gray-300 focus:text-black px-4 py-2 w-full rounded-md bg-[#fdfdfd]'
+                        className='border border-base-300 focus:text-black px-4 py-2 w-full rounded-md '
                      />
 
                      {imgPreview && (
@@ -178,7 +188,7 @@ const CreateProduct = () => {
                         type='text'
                         value = {category}
                         onChange={(e) => setDescription(e.target.value)}
-                        className='border border-gray-300 px-4 py-2 w-full rounded-md'
+                        className='border border-base-300 px-4 py-2 w-full rounded-md'
                      /> */}
                      </div>
                 </div>

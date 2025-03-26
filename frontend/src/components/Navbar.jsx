@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Home from './../pages/Home';
+import ThemeToggleButton from './ThemeToggleButton'
+import CartIcon from './CartIcon'
 
 const Navbar = () => {
     return (
-        <div className="navbar bg-base-100 max-w-[1200px] mx-auto shadow-sm lg:justify-between md:justify-between">
+        <div className="navbar max-w-[1200px] mx-auto shadow-sm lg:justify-between md:justify-between">
             <div className="navbar-start lg:hidden md:hidden">
                 <div className='dropdown '>
                     <button className="btn btn-square btn-ghost ">
@@ -16,11 +17,15 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
-            <a className="btn btn-ghost text-xl navbar-center lg:navbar-start md:navbar-start" href='/'>Ecommerce</a>
+            <a className="btn btn-ghost text-xl navbar-center lg:navbar-start md:navbar-start md:w-[30%]" href='/'>Ecommerce</a>
             
-            <div className="lg:flex md:flex hidden ">
+            <div className="lg:flex md:flex hidden navbar-center">
                 <li className='list-none px-10'><Link to="/">Home</Link></li>
                 <li className='list-none px-10'><Link to="/shop">Shop</Link></li>     
+            </div>
+            <div className='navbar-end gap-12'>
+            <Link to="/cart"><CartIcon /> </Link>
+                <ThemeToggleButton />
             </div>
         </div>
         

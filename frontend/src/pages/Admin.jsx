@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Link, Links } from 'react-router-dom'
+import Stats from '../components/Stats';
 // import { axios } from 'axios';
 
 function Admin() {
@@ -16,7 +17,6 @@ function Admin() {
   useEffect(() => {
     axios.get('http://localhost:5000/product')
       .then((res) => {
-        debugger;
         setProduct(res?.data?.product);
         setLoading(false);
       })
@@ -27,14 +27,18 @@ function Admin() {
       })
   }, [])
   return (
-    <div className='px-4 py-8 max-w-7xl bg-gray-500 mx-auto'>
+    <div className='px-4 py-8 max-w-7xl mx-auto'>
+
+    <Stats />
+
+
       <div className='overflow-x-auto'>
         <table className='table'>
           <thead>
             <tr>
               <th>
                 <Link to="/admin/product/create"
-                  className='bg-green-600 hover:bg-green-900 text-white py-2 px-4 font-medium rounded-lg shadow-md'>
+                  className='bg-green-600 hover:bg-green-900 text-base-100 py-2 px-4 font-medium rounded-lg shadow-md'>
                   Add Item +
                 </Link>
               </th>
@@ -47,7 +51,7 @@ function Admin() {
 
           <tbody>
             {product.map((product, index) => (
-              <tr key={product._id} className='bg-white hover:bg-gray-300 text-yellow-600'>
+              <tr key={product._id} className='bg-base-100 hover:bg-base-300 text-yellow-600'>
                 <td>
                   <div className='avatar'>
                     <div className='mask mask-squircle w-12 h-12'>

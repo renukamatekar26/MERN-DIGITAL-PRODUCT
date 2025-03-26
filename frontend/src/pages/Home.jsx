@@ -27,7 +27,7 @@ const Home = () => {
     }, [])
     return (
         <div className='p-4 max-w-[1300px] mx-auto mt-16'>
-            <div className='hero-content text-center'>
+            <div className='hero-content text-center mb-24'>
                 <div className='max-w-md'>
                     <h1 className='text-5xl font-bold'>
                         Welcome to <span className='text-teal-700'>Eccomerce</span>
@@ -36,7 +36,7 @@ const Home = () => {
                         We offer high quality online courses for programming
                         and website templates you can buy
                     </p>
-                    <button className='btn btn-primary'>Shop</button>
+                    <a className='btn btn-accent mt-4' href='/shop'>Shop</a>
                     
                 </div>
             </div>

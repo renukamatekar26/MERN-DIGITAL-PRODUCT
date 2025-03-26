@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {},
   },
+  darkMode: 'class',
   plugins: [
     import("@tailwindcss/typography"), daisyui
   ], daisyui: {

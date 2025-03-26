@@ -15,10 +15,19 @@ const DeleteProduct = () => {
     
         // notification
         const { enqueueSnackbar } = useSnackbar();
+        // authorize user to edit product
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        };
 
         const handleDeleteProduct =() =>{
             setLoading(true);
-            axios.delete(`http://localhost:5000/product/${id}`)
+            axios.delete(`http://localhost:5000/product/${id}`, config)
             .then(() =>{
                 setLoading(false);
                 enqueueSnackbar('product deleted successfully', {variant: 'success'})
@@ -34,17 +43,17 @@ const DeleteProduct = () => {
             return <Spinner />;
         }
     return (
-        <div className='p-6 bg-gray-50 flex justify-center items-start'>
-            <div className='container max-w-lg shadow-lg rounded-lg p-5 '>
+        <div className='p-6 flex justify-center items-start'>
+            <div className='container max-w-lg shadow-lg rounded-lg p-5 bg-base-200'>
                 <Link to='/admin'
-                className='flex justify-center items-center bg-gray-900  mb-4 w-24 py-[10px] px-4 text-white text-sm rounded-xl'>
+                className='btn-accent flex justify-center items-center mb-4 w-24 py-[10px] px-4 text-sm rounded-xl'>
                 Back</Link>
-                <h2 className='text-2xl mb-4 font-semibold text-gray-800'>
+                <h2 className='text-2xl mb-4 font-semibold'>
                     Are you sure you want to delete this product?
                 </h2>
                 <button
                 onClick={handleDeleteProduct}
-                className='bg-red-600 hover:bg-red-900 text-white py-2 px-4 rounded-lg w-full'>
+                className='bg-red-600 hover:bg-red-900  py-2 px-4 rounded-lg w-full'>
                 Yes, Delete
                 </button>
             </div>
